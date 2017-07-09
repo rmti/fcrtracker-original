@@ -20,10 +20,9 @@ Meteor.methods({
     new SimpleSchema({
       url: {
         type: String,
-        label: 'Your link',
-        regEx: SimpleSchema.RegEx.Url
+        label: 'Invoice Number'
       }
-    }).validate({ url });
+    });
 
     Links.insert({
       _id: shortid.generate(),

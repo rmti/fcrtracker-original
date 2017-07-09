@@ -24,11 +24,11 @@ export default class LinksListItem extends React.Component {
     this.clipboard.destroy();
   }
   renderStats() {
-    const visitMessage = this.props.visitedCount === 1 ? 'visit' : 'visits';
+    const visitMessage = this.props.visitedCount === 1 ? 'paid' : 'unpaid';
     let visitedMessage = null;
 
     if (typeof this.props.lastVisitedAt === 'number') {
-      visitedMessage = `(visited ${ moment(this.props.lastVisitedAt).fromNow() })`;
+      visitedMessage = `(viewed ${ moment(this.props.lastVisitedAt).fromNow() })`;
     }
 
     return <p className="item__message">{this.props.visitedCount} {visitMessage} {visitedMessage}</p>;
@@ -40,7 +40,7 @@ export default class LinksListItem extends React.Component {
         <p className="item__message">{this.props.shortUrl}</p>
         {this.renderStats()}
         <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">
-          Visit
+          Open
         </a>
         <button className="button button--pill" ref="copy" data-clipboard-text={this.props.shortUrl}>
           {this.state.justCopied ? 'Copied' : 'Copy'}
