@@ -2,16 +2,18 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Router, Route, browserHistory } from 'react-router';
 
+
 import Signup from '../ui/Signup';
-import Link from '../ui/Link';
+import FCRApp from '../ui/App';
 import NotFound from '../ui/NotFound';
 import Login from '../ui/Login';
+import Link from '../ui/Link';
 
 const unauthenticatedPages = ['/', '/signup'];
-const authenticatedPages = ['/links'];
+const authenticatedPages = ['/fcr','/invoice'];
 const onEnterPublicPage = () => {
   if (Meteor.userId()) {
-    browserHistory.replace('/links');
+    browserHistory.replace('/fcr');
   }
 };
 const onEnterPrivatePage = () => {
@@ -25,7 +27,7 @@ export const onAuthChange = (isAuthenticated) => {
   const isAuthenticatedPage = authenticatedPages.includes(pathname);
 
   if (isUnauthenticatedPage && isAuthenticated) {
-    browserHistory.replace('/links');
+    browserHistory.replace('/fcr');
   } else if (isAuthenticatedPage && !isAuthenticated) {
     browserHistory.replace('/');
   }
@@ -34,7 +36,9 @@ export const routes = (
   <Router history={browserHistory}>
     <Route path="/" component={Login} onEnter={onEnterPublicPage}/>
     <Route path="/signup" component={Signup} onEnter={onEnterPublicPage}/>
-    <Route path="/links" component={Link} onEnter={onEnterPrivatePage}/>
+    <Route path="/fcr" component={FCRApp} onEnter={onEnterPrivatePage}>
+      <Route path="/invoice" component={Link} onEnter={onEnterPrivatePage}/>
+    </Route>
     <Route path="*" component={NotFound}/>
   </Router>
 );
