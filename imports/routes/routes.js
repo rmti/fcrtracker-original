@@ -8,9 +8,10 @@ import FCRApp from '../ui/App';
 import NotFound from '../ui/NotFound';
 import Login from '../ui/Login';
 import Link from '../ui/Link';
+import Client from '../ui/Client';
 
 const unauthenticatedPages = ['/', '/signup'];
-const authenticatedPages = ['/fcr','/invoice'];
+const authenticatedPages = ['/fcr','/invoice','/client'];
 const onEnterPublicPage = () => {
   if (Meteor.userId()) {
     browserHistory.replace('/fcr');
@@ -37,7 +38,8 @@ export const routes = (
     <Route path="/" component={Login} onEnter={onEnterPublicPage}/>
     <Route path="/signup" component={Signup} onEnter={onEnterPublicPage}/>
     <Route path="/fcr" component={FCRApp} onEnter={onEnterPrivatePage}>
-      <Route path="/invoice" component={Link} onEnter={onEnterPrivatePage}/>
+    <Route path="/invoice" component={Link} onEnter={onEnterPrivatePage}/>
+    <Route path="/client" component={Client} onEnter={onEnterPrivatePage}/>
     </Route>
     <Route path="*" component={NotFound}/>
   </Router>

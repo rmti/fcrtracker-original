@@ -15,50 +15,48 @@ import People from 'material-ui/svg-icons/social/people';
 import Person from 'material-ui/svg-icons/social/person';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import FlatButton from 'material-ui/FlatButton';
-import { Accounts } from 'meteor/accounts-base';
-import { Link } from 'react-router';
+import {Accounts} from 'meteor/accounts-base';
+import {Link} from 'react-router';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 export default class FCRAppBar extends React.Component {
   constructor(props) {
-   super(props);
-   this.state = {open: false};
- }
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
 
- handleToggle = () => this.setState({open: !this.state.open});
+  handleToggle() {
+    this.setState({open: !this.state.open})
+  }
 
- handleHamburgerMenuClick() {
-   this.setState({open: !this.state.open})
- }
+  onSubmit(e) {
+    e.preventDefault();
+  }
 
- onSubmit(e) {
-   e.preventDefault();
- }
+  render() {
+    return (
+      <div className="header">
+        <AppBar title="fcrTracker" onLeftIconButtonTouchTap={this.handleToggle.bind(this)} showMenuIconButton={true} iconElementRight={< FlatButton label = "Logout" onTouchTap = {
+          () => Accounts.logout()
+        } />}/>
 
- render() {
-   return (
-     <div className="header">
-       <AppBar title="fcrTracker"
-         onLeftIconButtonTouchTap={this.handleHamburgerMenuClick.bind(this)}
-         showMenuIconButton={true}
-         iconElementRight={<FlatButton label="Logout" onTouchTap={() => Accounts.logout()}/>} />
-
-       <Drawer open={this.state.open}>
-         <AppBar title="Menu" showMenuIconButton={true}
-           iconElementLeft={<IconButton><ArrowBack /></IconButton>}
-           onLeftIconButtonTouchTap={this.handleHamburgerMenuClick.bind(this)}/>
-         <Menu>
-           <MenuItem value="InvoiceMenu" primaryText="Invoices"  leftIcon={<Description/>} containerElement={<Link to="/invoice" />} />
-          <MenuItem value="PaymentMenu" primaryText="Payments"  leftIcon={<Payment/>} />
-         <MenuItem value="ExpenseMenu"  primaryText="Expenses"  leftIcon={<Receipt/>} />
-         <MenuItem value="ClientMenu"  primaryText="Clients"  leftIcon={<People/>} />
-         <MenuItem value="VendorMenu" primaryText="Vendors"  leftIcon={<Person/>} />
-         <MenuItem value="TimeAccountingMenu" primaryText="Time Accounting"  leftIcon={<Schedule/>} />
-          <MenuItem value="SettingsMenu" primaryText="Settings" leftIcon={<Settings />} />
-        </Menu>
-       </Drawer>
-     </div>
-   )
- }
+        <Drawer open={this.state.open}>
+          <AppBar title="Menu" showMenuIconButton={true} iconElementLeft={< IconButton > <ArrowBack/> < /IconButton>} onLeftIconButtonTouchTap={this.handleToggle.bind(this)}/>
+          <Menu>
+            <MenuItem value="Invoice" primaryText="Invoices" leftIcon={< Description />} onTouchTap={this.handleToggle.bind(this)} containerElement={< Link to = "/invoice" />}/>
+            <MenuItem value="PaymentMenu" primaryText="Payments" leftIcon={< Payment />}/>
+            <MenuItem value="ExpenseMenu" primaryText="Expenses" leftIcon={< Receipt />}/>
+            <MenuItem value="ClientMenu" primaryText="Clients" leftIcon={< People />} onTouchTap={this.handleToggle.bind(this)} containerElement={< Link to = "/client" />}/>
+            <MenuItem value="VendorMenu" primaryText="Vendors" leftIcon={< Person />}/>
+            <MenuItem value="TimeAccountingMenu" primaryText="Time Accounting" leftIcon={< Schedule />}/>
+            <MenuItem value="Profile" primaryText="Profile" leftIcon={< Description />} containerElement={< Link to = "/profile" />}/>
+            <MenuItem value="SettingsMenu" primaryText="Settings" leftIcon={< Settings />}/>
+          </Menu>
+        </Drawer>
+      </div>
+    )
+  }
 };
